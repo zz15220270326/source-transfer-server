@@ -1,0 +1,44 @@
+<tbody class="list-table-body">
+  <% for (let i = 0; i < tableData.length; i++) { let tr = tableData[i]; %>
+    <tr class="list-table-row" data-index="<%= i %>">
+      <% for (let td of tableHead) { %>
+        <td class="list-table-data" data-key="<%= td.key %>">
+          <% if (td.key === 'operations') { %>
+            <% for (let operation of tr[td.key]) { %>
+              <%- include('table-body/OperateBtn.ejs', {
+                key: operation.key,
+                label: operation.label,
+              }) %>
+            <% } %>
+          <% } %>
+
+          <% if (td.key === 'videoLink') { %>
+            <%- include('table-body/NavLink.ejs', {
+              href: tr[td.key],
+              linkTip: '点击跳转视频详情页'
+            }) %>
+          <% } %>
+
+          <% if (td.key === 'videoCover') { %>
+            <%- include('table-body/VideoCover.ejs', {
+              presetSrc: '/imgs/lazyload.webp',
+              src: tr[td.key],
+              title: tr['videoName']
+            }) %>
+          <% } %>
+          
+          <% if (['ctime', 'mtime', 'videoName'].includes(td.key)) { %>
+            <span><%= tr[td.key] %></span>
+          <% } %>
+        </td>
+      <% } %>
+    </tr>
+  <% } %>
+
+  <% if (!tableData.length) { %>
+    <%- include('table-body/NoDataTip.ejs', {
+      rowspan: tableHead.length,
+      tip: '暂无数据'
+    }) %>
+  <% } %>
+</tbody>

@@ -1,0 +1,9 @@
+<nav class="page-nav">
+  <% for (let navItemIdx in navList) { let navItem = navList[navItemIdx]; %>
+    <%- include('item.ejs', {
+      navItem,
+      navItemIdx,
+      path
+    }) %>
+  <% } %>
+</nav>

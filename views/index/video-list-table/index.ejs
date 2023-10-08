@@ -1,0 +1,22 @@
+<table
+  class="list-table video-list-table J_VideoListTable"
+  align="left"
+  border="0"
+>
+  <%- include('./TableHead.ejs', {
+    tableHead: videoTableHead,
+  }) %>
+  <%- include('./TableBody.ejs', {
+    tableHead: videoTableHead,
+    tableData: videoTableInfo.list,
+    page: videoTableInfo.page,
+    pageSize: videoTableInfo.pageSize
+  }) %>
+</table>
+
+<%- include('../../common/pagination.ejs', {
+  page: videoTableInfo.page,
+  pageSize: videoTableInfo.pageSize,
+  total: videoTableInfo.total,
+  totalPage: videoTableInfo.totalPage,
+}) %>

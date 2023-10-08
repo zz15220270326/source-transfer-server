@@ -1,0 +1,12 @@
+<a
+  class="nav-item <%= navItem.path == path ? 'active' : '' %>"
+  href="<%= navItem.path %>"
+  data-index="<%= navItemIdx %>"
+>
+  <% if (navItemIdx !== 0) { %>
+    / 
+  <% } %>
+  <span class="nav-item-text">
+    <%= navItem.name %>
+  </span>
+</a>
