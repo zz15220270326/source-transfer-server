@@ -65,10 +65,11 @@ export function getVideoList() {
 /**
  * 获取分页的视频列表
  */
-export function getPaginationVideoList(page = 1, pageSize = 10) {
+export function getPaginationVideoList(page = 1, pageSize = 10, keyword?: string) {
   const videoList: string[] = getVideoList();
-  const data = getPaginationListData(
-    videoList.map(videoLink => {
+
+  const filterVideoList = videoList
+    .map(videoLink => {
       const videoFrags = videoLink.split('/');
       const videoName = videoFrags[videoFrags.length - 1];
       const {
@@ -78,8 +79,8 @@ export function getPaginationVideoList(page = 1, pageSize = 10) {
         ...restStats
       } = statSync(paths.videoDir + '/'+ videoName);
       const videoCover = existsSync(paths.videoDir + '/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg')
-                       ? '/videos/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg'
-                       : '/videos/img/' + 'default.jpg';
+                      ? '/videos/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg'
+                      : '/videos/img/' + 'default.jpg';
       
       return {
         videoName,
@@ -94,7 +95,18 @@ export function getPaginationVideoList(page = 1, pageSize = 10) {
           },
         ],
       };
-    }).sort((a, b) => b.ctimeMs - a.ctimeMs),
+    })
+    .filter(item => {
+      if (!!keyword) {
+        const { videoName } = item;
+        return videoName.includes(keyword) || keyword.includes(videoName);
+      }
+      return true;
+    })
+    .sort((a, b) => b.ctimeMs - a.ctimeMs);
+
+  const data = getPaginationListData(
+    filterVideoList,
     page,
     pageSize
   );

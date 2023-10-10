@@ -2,9 +2,8 @@
 
   <div class="container J_IndexPage">
     <%- include('common/nav/index.ejs', { navList, path }) %>
-    <%- include('index/video-list-table/index.ejs', {
-      
-    }) %>
+    <%- include('index/search-bar/index.ejs', { keyword }) %>
+    <%- include('index/video-list-table/index.ejs', {}) %>
   </div>
 
   <!-- 引入脚本 -->

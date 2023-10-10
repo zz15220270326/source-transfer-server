@@ -39,20 +39,21 @@ const pageConfig = {
       {
         key: 'videoLink',
         label: '视频链接',
-        width: '500px',
+        // width: '500px',
+        width: '250px',
         align: 'left'
       },
       {
         key: 'ctime',
         label: '创建时间',
         align: 'left',
-        width: '400px'
+        width: '320px'
       },
       {
         key: 'mtime',
         label: '修改时间',
         align: 'left',
-        width: '400px',
+        width: '320px',
       },
       {
         key: 'operations',

@@ -5,8 +5,9 @@ import pageConfig from '../configs/page';
 export function getIndexPage(req: Request, res: Response) {
   const page: number = Number(req.query.page) || 1;
   const pageSize: number = Number(req.query.page_size) || 10;
+  const keyword: string = req.query.keyword === undefined ? '' : String(req.query.keyword);
 
-  const videoTableInfo = videoService.getPaginationVideoList(page, pageSize);
+  const videoTableInfo = videoService.getPaginationVideoList(page, pageSize, keyword);
 
   res.render('index.ejs', {
     title: pageConfig.index.title,
@@ -14,6 +15,7 @@ export function getIndexPage(req: Request, res: Response) {
     videoTableHead: pageConfig.index.videoTableHead,
     videoTableInfo,
     path: req.path,
+    keyword,
     scripts: pageConfig.index.scripts,
     stylesheets: [
       ...pageConfig.index.stylesheets
