@@ -6,12 +6,51 @@ import {
   mkdirSync,
   writeFileSync,
   copyFileSync,
-  renameSync
+  renameSync,
+  unlinkSync,
+  // readSync,
+  rmdirSync
 } from 'fs';
 import { join } from 'path';
 import { execSync } from 'child_process';
 
 import * as paths from '../configs/paths';
+
+/**
+ * @function isDirectory
+ * @description 判断当前路径是否为一个文件夹
+ * @param {string} path 校验路径
+ * @return {boolean} true -> 是一个文件夹；false 不是一个文件夹
+ */
+export function isDirectory(path: string): boolean {
+  return existsSync(path) && readdirSync(path).length > 0;
+}
+
+/**
+ * @function removeDirectory
+ * @description 删除一个文件夹
+ * @description 文件夹是不能够直接删除的, 需要先:
+ *   1. unlink file (删除所有的文件)
+ *   2. rmdir directory (删除文件夹)
+ * @description 考虑递归的情况
+ * @param {string} path
+ * @return {void} 没有返回值
+ */
+export function removeDirectory(path: string, clearSelf: boolean = false): void {
+  if (!isDirectory(path)) return;
+
+  const files = readdirSync(path);
+
+  for (let file of files) {
+    if (isDirectory(file)) {
+      removeDirectory(join(path, file));
+    } else {
+      unlinkSync(join(path, file));
+    }
+  }
+
+  clearSelf && rmdirSync(path);
+}
 
 /**
  * 初始化临时文件的路径
@@ -28,19 +67,23 @@ export function initTargetDir() {
       }
     });
     // 2. 删除掉原来的 target 文件夹
-    execSync('rm -rf target');
+    removeDirectory(paths.targetDir);
+  } else {
+    mkdirSync(paths.targetDir);
   }
-  mkdirSync(paths.targetDir);
 }
 
 /**
  * 初始化源文件夹路径
  */
 export function initOriginDir() {
-  console.log(`rm -rf ${paths.originDir}`, `mkdir ${paths.originDir}`);
-
-  execSync(`rm -rf ${paths.originDir}`);
-  execSync(`mkdir ${paths.originDir}`);
+  if (existsSync(paths.originDir)) {
+    console.log(`删除原文件夹：%s`, paths.originDir);
+    removeDirectory(paths.originDir);
+  } else {
+    console.log(`重新创建文件夹：%s`, paths.originDir);
+    mkdirSync(paths.originDir);
+  }
 }
 
 /**
