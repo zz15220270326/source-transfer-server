@@ -3,7 +3,7 @@
     <% for (let head of tableHead) { %>
       <th
         key="<%= head.key %>"
-        data-head="<%- JSON.stringify(head) %>"
+        data-head="<%= JSON.stringify(head) %>"
         class="list-table-row"
         width="<%= head.width %>"
         align="<%= head.align %>"

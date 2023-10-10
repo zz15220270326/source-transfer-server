@@ -6,6 +6,8 @@
     <%- include('index/video-list-table/index.ejs', {}) %>
   </div>
 
+  <%- include('common/backTop.ejs', {}) %>
+
   <!-- 引入脚本 -->
   <% for (let script of scripts) { %>
     <script type="text/javascript" src="<%= script %>"></script>
