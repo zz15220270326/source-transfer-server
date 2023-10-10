@@ -32,3 +32,15 @@ export function getVideoTransferPage(req: Request, res: Response) {
     ]
   })
 }
+
+export function getAudioTransferPage(req: Request, res: Response) {
+  res.render('audioTransfer.ejs', {
+    title: pageConfig.audioTransfer.title,
+    navList: pageConfig.common.navList,
+    path: req.path,
+    scripts: pageConfig.audioTransfer.scripts,
+    stylesheets: [
+      ...pageConfig.audioTransfer.stylesheets
+    ]
+  });
+}

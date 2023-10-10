@@ -27,7 +27,7 @@ const pageConfig = {
       {
         key: 'videoName',
         label: '视频名称',
-        width: '360px',
+        width: '300px',
         align: 'left'
       },
       {
@@ -78,6 +78,16 @@ const pageConfig = {
       frontEndingHost + '/js/videoTransfer.js',
     ],
   },
+
+  audioTransfer: {
+    title: '音频转换',
+    stylesheets: [
+      frontEndingHost + '/css/audioTransfer.css',
+    ],
+    scripts: [
+      frontEndingHost + '/js/audioTransfer.js',
+    ],
+  }
 };
 
 export default pageConfig;
