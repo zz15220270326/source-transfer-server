@@ -78,8 +78,8 @@ export function getPaginationVideoList(page = 1, pageSize = 10, keyword?: string
         ...restStats
       } = statSync(paths.videoDir + '/'+ videoName);
       const videoCover = existsSync(paths.videoDir + '/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg')
-                      ? '/videos/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg'
-                      : '/videos/img/' + 'default.jpg';
+                       ? '/videos/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg'
+                       : '/videos/img/' + 'default.jpg';
       
       return {
         videoName,

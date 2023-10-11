@@ -22,7 +22,7 @@ import * as paths from '../configs/paths';
  * @function isDirectory
  * @description 判断当前路径是否为一个文件夹
  * @param {string} path 校验路径
- * @return {boolean} true -> 是一个文件夹；false 不是一个文件夹
+ * @return {boolean} true -> 是一个文件夹；false -> 不是一个文件夹
  */
 export function isDirectory(path: string): boolean {
   return existsSync(path) && readdirSync(path).length > 0;
