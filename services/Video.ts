@@ -15,7 +15,6 @@ import {
   transferFileName,
   initOriginDir,
 } from '../libs/utils';
-import { execSync } from 'child_process';
 
 /**
  * 转换单个文件夹的 m4s 文件并得到 videoUrl
@@ -38,7 +37,7 @@ export async function transferVideoFileAndGetVideoUrl(
   await writeFileStreams(files, targetFiles);
 
   // 使用绝对路径运行
-  doTransferVideoCommand(targetFiles, videoName);
+  await doTransferVideoCommand(targetFiles, videoName);
 
   // 存储 banner 图片
   saveVideoCover(videoName, files);

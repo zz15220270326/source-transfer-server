@@ -14,6 +14,8 @@ import {
 import { join } from 'path';
 import { execSync } from 'child_process';
 
+import Ffmpeg from 'fluent-ffmpeg';
+
 import * as paths from '../configs/paths';
 
 /**
@@ -113,11 +115,14 @@ export async function writeFileStreams(
 }
 
 /**
- * 执行转换视频的命令
+ * @function doTransferVideoCommand
+ * @description 执行转换视频的命令
+ * @refer ffmpeg -i xxx.m4s -i yyy.m4s -codec copy zzz.mp4
  * @param {string[]} targetFiles 目标视频的文件夹
  * @param {outputPath} outputPath 需要输出到的文件夹路径
  */
-export function doTransferVideoCommand(targetFiles: string[], outputPath: string): void {
+export async function doTransferVideoCommand(targetFiles: string[], outputPath: string) {
+  const ffmpeg = Ffmpeg();
   const commandFiles = targetFiles.filter(file => /\.m4s$/.test(file));
   const command = commandFiles.reduce((cmd, file, fileIdx) => {
     cmd += ` -i ${file}`;
@@ -131,9 +136,24 @@ export function doTransferVideoCommand(targetFiles: string[], outputPath: string
   }, 'ffmpeg');
 
   console.log('执行命令 ：', command);
-  execSync(command);
 
-  console.log('🏅️🏅️🏅️🏅️🏅️🏅️ ＝＝＝＝＝＝＝＝＝＝　执行完成 ＝＝＝＝＝＝＝＝＝＝ 🏅️🏅️🏅️🏅️🏅️🏅️');
+  return new Promise((resolve, reject) => {
+    for (let file of commandFiles) {
+      ffmpeg.input(file);
+    }
+    ffmpeg
+      .outputOptions(['-codec copy'])
+      // .videoBitrate('1000k', true)
+      .output(join(paths.targetDir, String(outputPath)))
+      .on('end', () => {
+        console.log('🏅️🏅️🏅️🏅️🏅️🏅️ ＝＝＝＝＝＝＝＝＝＝　执行完成 ＝＝＝＝＝＝＝＝＝＝ 🏅️🏅️🏅️🏅️🏅️🏅️');
+        resolve('');
+      })
+      .on('error', (e: Error) => {
+        reject(e);
+      })
+      .run();
+  });
 }
 
 export function copyFileStream(originAbsolutePath: string, targetAbsolutePath: string) {
