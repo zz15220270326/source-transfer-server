@@ -4,10 +4,12 @@ node_modules
 
 yarn.lock
 
+*.mp3
 *.mp4
 *.zip
 
 public/videos/img/*
+public/audios/img/*
 
 # origin
 # target
