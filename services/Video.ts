@@ -1,6 +1,5 @@
-import { existsSync, readdirSync, statSync, rmSync, copyFileSync } from 'fs';
+import { readdirSync, unlinkSync } from 'fs';
 import { join } from 'path';
-import { parse } from 'url';
 
 import * as paths from '../configs/paths';
 
@@ -14,6 +13,11 @@ import {
   formatVideoName,
   transferFileName,
   initOriginDir,
+  touchFileIfNotExist,
+  mkdirIfNotExist,
+  readJsonFileSync,
+  writeJsonFileSync,
+  getFormatTime,
 } from '../libs/utils';
 
 /**
@@ -24,11 +28,14 @@ import {
  */
 export async function transferVideoFileAndGetVideoUrl(
   originVideoName: string,
-  clear: boolean = false
+  clear: boolean = true
 ): Promise<string> {
   const files: string[] = readdirSync(paths.originDir, 'utf8');
   const targetFiles: string[] = [];
-  const videoName = formatVideoName(originVideoName);
+  const filename = formatVideoName(originVideoName);
+
+  mkdirIfNotExist(paths.videoImgDir);
+  touchFileIfNotExist(paths.videoJsonPath, []);
 
   // 初始化临时文件路径
   initTargetDir();
@@ -37,26 +44,54 @@ export async function transferVideoFileAndGetVideoUrl(
   await writeFileStreams(files, targetFiles);
 
   // 使用绝对路径运行
-  await doTransferVideoCommand(targetFiles, videoName);
+  await doTransferVideoCommand(targetFiles, filename);
 
   // 存储 banner 图片
-  saveVideoCover(videoName, files);
+  saveVideoCover(filename, files);
 
-  console.log({ clear });
+  // const size = statSync(paths.videoBaseUrl).size;
+
+  const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.videoJsonPath);
+  const fileInfo = {
+    id: `video-${prevFileList.length + 1}`,
+    originalname: originVideoName,
+    filename,
+    size: 'unknown',
+    type: 'video',
+    playUrl: `${paths.videoBaseUrl}${filename}`,
+    banner: paths.videoBaseUrl + 'img/' + filename.replace(/\.mp4$/, '') + '.jpg',
+    createTime: Date.now(),
+    updateTime: -1
+  };
+  const fileIdx = prevFileList.findIndex(item => item.originalname === fileInfo.originalname);
+  if (fileIdx !== -1) {
+    const newFileList = prevFileList.map((item, index) => {
+      if (index === fileIdx) {
+        fileInfo.createTime = item.createTime;
+        fileInfo.updateTime = Date.now();
+        return fileInfo;
+      }
+      return item;
+    });
+    writeJsonFileSync(newFileList, paths.videoJsonPath);
+  } else {
+    const newFileList = [...prevFileList, fileInfo];
+    writeJsonFileSync(newFileList, paths.videoJsonPath);
+  }
 
   if (clear) {
     initTargetDir();
     initOriginDir();
   }
 
-  return `${paths.videoBaseUrl}${videoName}`;
+  return `${paths.videoBaseUrl}${filename}`;
 }
 
 /**
  * 获取视频列表
  */
 export function getVideoList() {
-  const videoList: string[] = getAllVideos();
+  const videoList: Record<string, any>[] = getAllVideos();
 
   return videoList;
 }
@@ -64,29 +99,39 @@ export function getVideoList() {
 /**
  * 获取分页的视频列表
  */
-export function getPaginationVideoList(page = 1, pageSize = 10, keyword?: string) {
-  const videoList: string[] = getVideoList();
+export function getPaginationList(page = 1, pageSize = 10, keyword?: string) {
+  const originList: Record<string, any>[] = getVideoList();
 
-  const filterVideoList = videoList
-    .map(videoLink => {
-      const videoFrags = videoLink.split('/');
-      const videoName = videoFrags[videoFrags.length - 1];
+  const filterVideoList = originList
+    .map(item => {
       const {
+        id,        
+        originalname,
+        playUrl,
         size,
-        uid,
-
+        banner,
+        createTime,
+        updateTime,
         ...restStats
-      } = statSync(paths.videoDir + '/'+ videoName);
-      const videoCover = existsSync(paths.videoDir + '/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg')
-                       ? '/videos/img/'+ videoName.replace(/\.mp4$/, '') + '.jpg'
-                       : '/videos/img/' + 'default.jpg';
+      } = item;
+      const sourceType = id.includes('video')
+                       ? 'video'
+                       : id.includes('audio')
+                       ? 'audio'
+                       : '';
       
       return {
-        videoName,
-        videoLink: parse(videoLink).path,
+        id,
+        sourceType,
+        name: 'originalname',
+        originalname,
+        playUrl,
         size: (size / 1024 / 1024).toFixed(2) + 'GB',
+        createTime,
+        banner,
+        ctime: getFormatTime(createTime),
+        mtime: typeof updateTime === 'number' && updateTime !== -1 ? getFormatTime(updateTime) : '--',
         ...restStats,
-        videoCover,
         operations: [
           {
             key: 'remove',
@@ -97,12 +142,12 @@ export function getPaginationVideoList(page = 1, pageSize = 10, keyword?: string
     })
     .filter(item => {
       if (!!keyword) {
-        const { videoName } = item;
-        return videoName.includes(keyword) || keyword.includes(videoName);
+        const { originalname } = item;
+        return originalname.includes(keyword) || keyword.includes(originalname);
       }
       return true;
     })
-    .sort((a, b) => b.ctimeMs - a.ctimeMs);
+    .sort((a, b) => b.createTime - a.createTime);
 
   const data = getPaginationListData(
     filterVideoList,
@@ -116,22 +161,21 @@ export function getPaginationVideoList(page = 1, pageSize = 10, keyword?: string
 /**
  * 删除某一个视频文件
  */
-export function removeVideoFile(filename: string) {
-  let _filename: string = filename;
-  if (!/\.mp4$/.test(filename)) {
-    _filename += '.mp4';
-  }
-  const absouluteFileName = paths.videoDir + '/' + _filename;
-
-  console.log({
-    absouluteFileName,
-    existsSync: existsSync(absouluteFileName),
-  })
-
-  if (!existsSync(absouluteFileName)) {
-    return;
-  }
-  rmSync(absouluteFileName);
+export function removeVideoFile(id: string) {
+  const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.videoJsonPath);
+  const nextFileList = prevFileList.filter(item => {
+    if (item.id == id) {
+      // 删除图片、删除视频
+      const filename: string = item.filename,
+            videoFileUrl: string = paths.videoDir + '/' + filename,
+            imgFileUrl: string = paths.videoImgDir + '/' + filename.replace(/\.mp4$/, '.jpg');
+      unlinkSync(videoFileUrl);
+      unlinkSync(imgFileUrl);
+      return false;
+    }
+    return true;
+  });
+  writeJsonFileSync(nextFileList, paths.videoJsonPath);
 }
 
 /**

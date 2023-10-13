@@ -15,7 +15,9 @@ export default async (req: Request, res: Response, next: NextFunction) => {
 
     const responseTime = endTime - startTime;
 
-    const params = req.method === 'GET' ? req.query : req.body;
+    const params = req.method === 'GET'
+                 ? { ...req.query, ...req.params }
+                 : req.body;
 
     res.setHeader('X-Send-Log-Id', Date.now());
 

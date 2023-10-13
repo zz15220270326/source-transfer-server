@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import * as paths from '../configs/paths';
 
 import * as service from '../services/Video';
-import { transferFileName } from '../libs/utils';
 
 /**
  * 转换单个文件夹的 m4s 文件
@@ -19,7 +18,7 @@ export async function transferVideoFile(req: Request, res: Response) {
   }
 
   try {
-    const videoUrl: string = await service.transferVideoFileAndGetVideoUrl(outputPath, clear);
+    const videoUrl: string = await service.transferVideoFileAndGetVideoUrl(outputPath);
 
     res.send({
       msg: 'ok',
@@ -67,7 +66,7 @@ export function getVideoList(req: Request, res: Response) {
     page = 1,
     page_size = 10,
   } = req.query;
-  const data = service.getPaginationVideoList(Number(page), Number(page_size));
+  const data = service.getPaginationList(Number(page), Number(page_size));
 
   res.send({
     msg: 'ok',
@@ -81,17 +80,17 @@ export function getVideoList(req: Request, res: Response) {
  */
 export function removeVideoFile(req: Request, res: Response) {
   try {
-    const { videoName } = req.params;
+    const { videoId } = req.params;
 
-    if (!videoName) {
+    if (!videoId) {
       res.send({
-        msg: 'videoName is not exists',
+        msg: 'videoId is not exists',
         code: -1
       });
       return;
     }
 
-    service.removeVideoFile(videoName);
+    service.removeVideoFile(videoId);
 
     res.send({
       msg: 'ok',

@@ -7,7 +7,11 @@ import { createDecipheriv } from 'crypto';
  * @param {string} outputPath 输出的 mp3 路径 （记得要以 mp3 结尾）
  * @return {void} 没有返回值
  */
-export function outputMp3ByNCM(sourcePath: string, outputPath: string) {
+export function outputMp3ByNCM(
+  sourcePath: string,
+  outputPath: string,
+  outputImgPath?: string
+) {
   let content = readFileSync(sourcePath);
 
   let start = 0;
@@ -15,7 +19,7 @@ export function outputMp3ByNCM(sourcePath: string, outputPath: string) {
 
   // 1.读取8字节,获取 magic header
   let temp = buff.slice(start, start + 8);
-  start += 10;// 空余 2 字节
+  start += 10; // 空余 2 字节
   let header = Buffer.from([0x43, 0x54, 0x45, 0x4E, 0x46, 0x44, 0x41, 0x4D]);
   if (!header.equals(temp)) {
     throw new Error('文件头已损坏');
@@ -89,7 +93,8 @@ export function outputMp3ByNCM(sourcePath: string, outputPath: string) {
   start += 4;
 
   // 写入图片数据
-  writeFileSync(outputPath.split('.mp3')[0] + '.png', buff.slice(start, start + imgLen))
+  let outputImgPullPath: string = outputImgPath ? outputImgPath : outputPath.split('.mp3')[0] + '.png';
+  writeFileSync(outputImgPullPath, buff.slice(start, start + imgLen))
   start += imgLen;
 
   let audioData = buff.slice(start);

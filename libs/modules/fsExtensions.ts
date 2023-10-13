@@ -11,6 +11,7 @@ import {
   readFileSync,
 } from 'fs';
 import { join } from 'path';
+import { createHash } from 'crypto';
 
 import * as paths from '../../configs/paths';
 
@@ -155,4 +156,38 @@ export function readJsonFileSync<T extends Record<string, any>>(path: string) {
 export function writeJsonFileSync<T extends Record<string, any>>(data: T, path: string) {
   const dataStr: string = JSON.stringify(data);
   writeFileSync(path, dataStr);
+}
+
+/**
+ * 加密文件名称
+ */
+export function encryptFileName(filename: string) {
+  const hash = createHash('sha256');
+  const input = createReadStream(filename);
+  let targetName = '';
+  
+  return new Promise<string>((resolve, reject) => {
+    input.on('readable', () => {
+      const data = input.read();
+      if (data)
+        hash.update(data);
+      else {
+        const message: string = `${hash.digest('hex')} ${filename}`;
+        console.log('can\'t read', message);
+        reject(new Error(message));
+      }
+    });
+
+    input.on('data', (chunk: string) => {
+      targetName += chunk;
+    });
+
+    input.on('end', () => {
+      resolve(targetName);
+    });
+
+    input.on('error', (err: Error) => {
+      reject(err);
+    })
+  });
 }

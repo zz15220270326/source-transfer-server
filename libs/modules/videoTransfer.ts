@@ -9,6 +9,7 @@ import { join } from 'path';
 import Ffmpeg from 'fluent-ffmpeg';
 
 import * as paths from '../../configs/paths';
+import { readJsonFileSync, touchFileIfNotExist } from './fsExtensions';
 
 /**
  * @function doTransferVideoCommand
@@ -56,9 +57,8 @@ export async function doTransferVideoCommand(targetFiles: string[], outputPath: 
  * 获取所有的 video (*.mp4)
  */
 export function getAllVideos() {
-  const videoList = readdirSync(paths.videoDir)
-    .filter(item => item.endsWith('.mp4'))
-    .map(item => paths.videoBaseUrl + item);
+  touchFileIfNotExist(paths.videoJsonPath, []);
+  const videoList = readJsonFileSync<Record<string, any>[]>(paths.videoJsonPath);
 
   return videoList;
 }
@@ -70,10 +70,6 @@ export function getAllVideos() {
  */
 export function saveVideoCover(videoName: string, files: string[]) {
   const bannerPaths = files.filter(item => /\.(jpg|png|jpeg)$/.test(item));
-
-  if (!existsSync(paths.videoImgDir)) {
-    mkdirSync(paths.videoImgDir);
-  }
 
   if (bannerPaths) {
     const image = bannerPaths.find(item => item.includes('image'));
@@ -88,18 +84,16 @@ export function saveVideoCover(videoName: string, files: string[]) {
 /**
  * 格式化视频名称
  */
-export function formatVideoName(originVideoName: string, encrypt?: boolean): string {
-  let videoName = originVideoName;
-  
-  videoName.replace(/\s/ig, '');
+export function formatVideoName(originVideoName: string): string {
+  let videoName = '';
+  const originVideoNameList = originVideoName.split('');
 
-  if (!/\.mp4$/.test(videoName)) {
-    videoName += '.mp4';
+  for (let str of originVideoNameList) {
+    videoName += str.codePointAt(0) ^ 2;
+    videoName += '-';
   }
-
-  if (encrypt) {
-    videoName = encodeURIComponent(videoName);
-  }
+  videoName = videoName.replace(/\-$/, '');
+  videoName += '.mp4';
 
   return videoName;
 }

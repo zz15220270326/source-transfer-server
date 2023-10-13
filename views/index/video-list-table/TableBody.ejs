@@ -12,22 +12,34 @@
             <% } %>
           <% } %>
 
-          <% if (td.key === 'videoLink') { %>
+          <% if (td.key === 'id') { %>
+            <%- include('table-body/ShowId.ejs', {
+              id: tr[td.key],
+            }) %>
+          <% } %>
+
+          <% if (td.key === 'playUrl') { %>
             <%- include('table-body/NavLink.ejs', {
               href: tr[td.key],
               linkTip: '点击跳转视频播放页'
             }) %>
           <% } %>
 
-          <% if (td.key === 'videoCover') { %>
+          <% if (td.key === 'banner') { %>
             <%- include('table-body/VideoCover.ejs', {
               presetSrc: '/imgs/lazyload.webp',
               src: tr[td.key],
-              title: tr['videoName']
+              title: tr['originalname']
+            }) %>
+          <% } %>
+
+          <% if (td.key === 'sourceType') { %>
+            <%- include('table-body/SourceType.ejs', {
+              sourceType: tr[td.key],
             }) %>
           <% } %>
           
-          <% if (['ctime', 'mtime', 'videoName'].includes(td.key)) { %>
+          <% if (['ctime', 'mtime', 'originalname', 'name'].includes(td.key)) { %>
             <span><%= tr[td.key] %></span>
           <% } %>
         </td>

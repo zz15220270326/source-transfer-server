@@ -7,7 +7,7 @@ const router = Router();
 
 router.post('/transfer', controller.transferVideoFile);
 router.get('/video-list', controller.getVideoList);
-router.delete('/remove-video/:videoName', controller.removeVideoFile);
+router.delete('/remove-video/:videoId', controller.removeVideoFile);
 router.get('/:videoName', controller.getVideoFile);
 router.post('/upload-file', uploadSingleVideo, controller.uploadVideoFile);
 

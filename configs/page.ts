@@ -23,22 +23,34 @@ const pageConfig = {
 
   index: {
     title: '首页',
-    videoTableHead: [
+    sourceTableHead: [
       {
-        key: 'videoName',
-        label: '视频名称',
+        key: 'id',
+        label: 'ID',
+        width: '100px',
+        align: 'left'
+      },
+      {
+        key: 'originalname',
+        label: '资源名称',
         width: '300px',
         align: 'left'
       },
       {
-        key: 'videoCover',
-        label: '视频封面',
+        key: 'sourceType',
+        label: '资源类型',
+        width: '100px',
+        align: 'left'
+      },
+      {
+        key: 'banner',
+        label: '资源封面',
         width: '280px',
         align: 'left'
       },
       {
-        key: 'videoLink',
-        label: '视频链接',
+        key: 'playUrl',
+        label: '资源链接',
         // width: '500px',
         width: '250px',
         align: 'left'

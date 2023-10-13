@@ -7,12 +7,12 @@ export function getIndexPage(req: Request, res: Response) {
   const pageSize: number = Number(req.query.page_size) || 10;
   const keyword: string = req.query.keyword === undefined ? '' : String(req.query.keyword);
 
-  const videoTableInfo = videoService.getPaginationVideoList(page, pageSize, keyword);
+  const videoTableInfo = videoService.getPaginationList(page, pageSize, keyword);
 
   res.render('index.ejs', {
     title: pageConfig.index.title,
     navList: pageConfig.common.navList,
-    videoTableHead: pageConfig.index.videoTableHead,
+    sourceTableHead: pageConfig.index.sourceTableHead,
     videoTableInfo,
     path: req.path,
     keyword,
