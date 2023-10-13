@@ -6,6 +6,9 @@ import {
   renameSync,
   createReadStream,
   createWriteStream,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
 } from 'fs';
 import { join } from 'path';
 
@@ -117,4 +120,39 @@ export function copyFileStream(originAbsolutePath: string, targetAbsolutePath: s
  */
 export function transferFileName(originFile: string, targetFile: string) {
   renameSync(originFile, targetFile);
+}
+
+/**
+ * 创建一个本身并不存在的文件夹
+ */
+export function mkdirIfNotExist(path: string) {
+  if (!existsSync(path)) {
+    mkdirSync(path);
+  }
+}
+
+/**
+ * 创建一个本身不存在的文件
+ */
+export function touchFileIfNotExist(path: string, json: Record<string, any>) {
+  if (!existsSync(path)) {
+    writeFileSync(path, JSON.stringify(json));
+  }
+}
+
+/**
+ * 读取 JSON 文件的内容
+ */
+export function readJsonFileSync<T extends Record<string, any>>(path: string) {
+  const str: string = readFileSync(path, 'utf8');
+  const json: T = JSON.parse(str);
+  return json;
+}
+
+/**
+ * 写入内容到 JSON 文件
+ */
+export function writeJsonFileSync<T extends Record<string, any>>(data: T, path: string) {
+  const dataStr: string = JSON.stringify(data);
+  writeFileSync(path, dataStr);
 }
