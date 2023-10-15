@@ -27,6 +27,8 @@ export function getSourceListPage(req: Request, res: Response) {
   res.render('sourceList.ejs', {
     title: pageConfig.sourceList.title,
     navList: pageConfig.common.navList,
+    sourceTypeList: pageConfig.sourceList.sourceTypeList,
+    sourceType,
     sourceTableHead: pageConfig.sourceList.sourceTableHead,
     tableInfo,
     path: req.path,

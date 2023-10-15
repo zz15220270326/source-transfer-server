@@ -1,0 +1,31 @@
+<div class="selector selector-size-<%= size %> <%= selector %>" data-value="<%= value %>">
+
+  <input
+    class="filter-text"
+    type="text"
+    readonly="readonly"
+    placeholder="请选择。。。"
+    value="<%=
+      list.find(item => item.value == value)
+      ?
+      `当前选择 ：${list.find(item => item.value == value)?.label}`
+      :
+      '暂未匹配到内容'
+    %>
+    "
+  />
+  <ul class="selector-list">
+    <% if (list.length > 0) { %>
+      <% for (let i = 0; i < list.length; i++) { let item = list[i]; %>
+        <%- include('Item.ejs', {
+          index: i,
+          label: item.label,
+          value: item.value
+        }) %>
+      <% } %>
+    <% } %>
+    <% if (list.length <= 0) { %>
+      <%- include('NoDataTip.ejs', {}) %>
+    <% } %>
+  </ul>
+</div>

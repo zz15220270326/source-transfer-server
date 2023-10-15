@@ -104,7 +104,8 @@ export function getFilterAudios(keyword?: string, sourceType?: string) {
   try {
     const list = filterSourceList(
       readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath),
-      keyword
+      keyword,
+      sourceType
     );
     return list;
   } catch (error) {

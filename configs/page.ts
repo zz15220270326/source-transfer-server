@@ -78,6 +78,20 @@ const pageConfig = {
         width: '200px'
       }
     ],
+    sourceTypeList: [
+      {
+        label: '全部',
+        value: '',
+      },
+      {
+        label: '视频',
+        value: 'video'
+      },
+      {
+        label: '音频',
+        value: 'audio'
+      }
+    ],
     stylesheets: [
       frontEndingHost + '/css/sourceList.css',
     ],

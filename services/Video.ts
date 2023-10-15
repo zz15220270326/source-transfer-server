@@ -103,7 +103,8 @@ export function getVideoList() {
  * @param {} keyword 搜索过滤的搜索关键词
  */
 export function getFilterVideos(keyword?: string, sourceType?: string) {
-  return filterSourceList(getVideoList(), keyword, sourceType);
+  const list = filterSourceList(getVideoList(), keyword, sourceType);
+  return list;
 }
 
 /**
