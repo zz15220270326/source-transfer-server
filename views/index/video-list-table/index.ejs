@@ -8,15 +8,15 @@
   }) %>
   <%- include('./TableBody.ejs', {
     tableHead: sourceTableHead,
-    tableData: videoTableInfo.list,
-    page: videoTableInfo.page,
-    pageSize: videoTableInfo.pageSize
+    tableData: tableInfo.list,
+    page: tableInfo.page,
+    pageSize: tableInfo.pageSize
   }) %>
 </table>
 
 <%- include('../../common/pagination.ejs', {
-  page: videoTableInfo.page,
-  pageSize: videoTableInfo.pageSize,
-  total: videoTableInfo.total,
-  totalPage: videoTableInfo.totalPage,
+  page: tableInfo.page,
+  pageSize: tableInfo.pageSize,
+  total: tableInfo.total,
+  totalPage: tableInfo.totalPage,
 }) %>

@@ -18,6 +18,7 @@ import {
   readJsonFileSync,
   writeJsonFileSync,
   getFormatTime,
+  filterSourceList,
 } from '../libs/utils';
 
 /**
@@ -98,57 +99,18 @@ export function getVideoList() {
 }
 
 /**
+ * 获取被过滤的视频列表
+ * @param {} keyword 搜索过滤的搜索关键词
+ */
+export function getFilterVideos(keyword?: string, sourceType?: string) {
+  return filterSourceList(getVideoList(), keyword, sourceType);
+}
+
+/**
  * 获取分页的视频列表
  */
 export function getPaginationList(page = 1, pageSize = 10, keyword?: string) {
-  const originList: Record<string, any>[] = getVideoList();
-
-  const filterVideoList = originList
-    .map(item => {
-      const {
-        id,        
-        originalname,
-        playUrl,
-        size,
-        banner,
-        createTime,
-        updateTime,
-        ...restStats
-      } = item;
-      const sourceType = id.includes('video')
-                       ? 'video'
-                       : id.includes('audio')
-                       ? 'audio'
-                       : '';
-      
-      return {
-        id,
-        sourceType,
-        name: 'originalname',
-        originalname,
-        playUrl,
-        size: (size / 1024 / 1024).toFixed(2) + 'GB',
-        createTime,
-        banner,
-        ctime: getFormatTime(createTime),
-        mtime: typeof updateTime === 'number' && updateTime !== -1 ? getFormatTime(updateTime) : '--',
-        ...restStats,
-        operations: [
-          {
-            key: 'remove',
-            label: '删除',
-          },
-        ],
-      };
-    })
-    .filter(item => {
-      if (!!keyword) {
-        const { originalname } = item;
-        return originalname.includes(keyword) || keyword.includes(originalname);
-      }
-      return true;
-    })
-    .sort((a, b) => b.createTime - a.createTime);
+  const filterVideoList = getFilterVideos(keyword);
 
   const data = getPaginationListData(
     filterVideoList,

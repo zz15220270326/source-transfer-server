@@ -10,6 +10,7 @@ import Ffmpeg from 'fluent-ffmpeg';
 
 import * as paths from '../../configs/paths';
 import { readJsonFileSync, touchFileIfNotExist } from './fsExtensions';
+import { getFormatTime } from './date';
 
 /**
  * @function doTransferVideoCommand
@@ -96,4 +97,71 @@ export function formatVideoName(originVideoName: string): string {
   videoName += '.mp4';
 
   return videoName;
+}
+
+/**
+ * 获取过滤后的视频数据列表
+ */
+export function filterSourceList(
+  originList: Record<string, any>[],
+  keyword?: string,
+  sourceType?: string
+): Record<string, any>[] {
+  const filterVideoList = originList
+    .map(item => {
+      const {
+        id,        
+        originalname,
+        playUrl,
+        size,
+        banner,
+        createTime,
+        updateTime,
+        ...restStats
+      } = item;
+      const sourceType = id.includes('video')
+                       ? 'video'
+                       : id.includes('audio')
+                       ? 'audio'
+                       : '';
+      
+      return {
+        id,
+        sourceType,
+        name: 'originalname',
+        originalname,
+        playUrl,
+        size: (size / 1024 / 1024).toFixed(2) + 'GB',
+        createTime,
+        banner,
+        ctime: getFormatTime(createTime),
+        mtime: typeof updateTime === 'number' && updateTime !== -1 ? getFormatTime(updateTime) : '--',
+        ...restStats,
+        operations: [
+          {
+            key: 'remove',
+            label: '删除',
+          },
+        ],
+      };
+    })
+    .filter(item => {
+      if (!!keyword) {
+        const { originalname } = item;
+        return originalname.includes(keyword) || keyword.includes(originalname);
+      }
+      return true;
+    })
+    .filter(item => {
+      if (!sourceType) {
+        return true;
+      }
+      if (item.sourceType !== sourceType) {
+        return false;
+      }
+      return true;
+    })
+    .sort((a, b) => b.createTime - a.createTime);
+
+  return filterVideoList;
 }

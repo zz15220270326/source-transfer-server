@@ -8,7 +8,8 @@ import {
   readJsonFileSync,
   writeJsonFileSync,
   encryptFileName,
-  getPaginationListData
+  getPaginationListData,
+  filterSourceList
 } from '../libs/utils';
 
 /**
@@ -93,4 +94,21 @@ export function getAllAudios(
   } = options || {};
   const data = getPaginationListData(audioList, page, pageSize);
   return data;
+}
+
+/**
+ * 获取被过滤的音频列表
+ * @param {} keyword 搜索过滤的搜索关键词
+ */
+export function getFilterAudios(keyword?: string, sourceType?: string) {
+  try {
+    const list = filterSourceList(
+      readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath),
+      keyword
+    );
+    return list;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 }
