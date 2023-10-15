@@ -22,7 +22,11 @@ import * as paths from '../../configs/paths';
  * @return {boolean} true -> 是一个文件夹；false -> 不是一个文件夹
  */
 export function isDirectory(path: string): boolean {
-  return existsSync(path) && readdirSync(path).length > 0;
+  try {
+    return existsSync(path) && readdirSync(path).length > 0;
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
@@ -41,10 +45,11 @@ export function removeDirectory(path: string, clearSelf: boolean = false): void 
   const files = readdirSync(path);
 
   for (let file of files) {
+    const curPath = join(path, file);
     if (isDirectory(file)) {
-      removeDirectory(join(path, file));
+      removeDirectory(curPath);
     } else {
-      unlinkSync(join(path, file));
+      unlinkSync(curPath);
     }
   }
 
