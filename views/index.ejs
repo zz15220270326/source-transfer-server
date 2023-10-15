@@ -1,16 +1,6 @@
 <%- include('common/head.ejs', { title, stylesheets }) %>
 
   <div class="container J_IndexPage">
-    <%- include('common/nav/index.ejs', { navList, path }) %>
-    <%- include('index/search-bar/index.ejs', { keyword }) %>
-    <%- include('index/video-list-table/index.ejs', {}) %>
   </div>
-
-  <%- include('common/backTop.ejs', {}) %>
-
-  <!-- 引入脚本 -->
-  <% for (let script of scripts) { %>
-    <script type="text/javascript" src="<%= script %>"></script>
-  <% } %>
 
 <%- include('common/foot.ejs') %>

@@ -67,6 +67,7 @@ export async function transferVideoFileAndGetVideoUrl(
   if (fileIdx !== -1) {
     const newFileList = prevFileList.map((item, index) => {
       if (index === fileIdx) {
+        fileInfo.id = item.id;
         fileInfo.createTime = item.createTime;
         fileInfo.updateTime = Date.now();
         return fileInfo;

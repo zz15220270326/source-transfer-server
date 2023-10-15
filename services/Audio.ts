@@ -36,13 +36,28 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
       originalname,
       filename,
       size,
+      type: 'audio',
       playUrl: paths.audioBaseUrl + filename + '.mp3',
       banner: paths.audioBaseUrl + 'img/' + filename + '.png',
       createTime: Date.now(),
       updateTime: -1
     };
-    const newFileList = [...prevFileList, fileInfo];
-    writeJsonFileSync(newFileList, paths.audioJsonPath);
+    const fileIdx = prevFileList.findIndex(item => item.originalname === fileInfo.originalname);
+    if (fileIdx !== -1) {
+      const newFileList = prevFileList.map((item, index) => {
+        if (index === fileIdx) {
+          fileInfo.id = item.id;
+          fileInfo.createTime = item.createTime;
+          fileInfo.updateTime = Date.now();
+          return fileInfo;
+        }
+        return item;
+      });
+      writeJsonFileSync(newFileList, paths.audioJsonPath);
+    } else {
+      const newFileList = [...prevFileList, fileInfo];
+      writeJsonFileSync(newFileList, paths.audioJsonPath);
+    }
 
     initOriginDir();
     initTargetDir();

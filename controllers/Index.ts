@@ -3,22 +3,27 @@ import * as videoService from '../services/Video';
 import pageConfig from '../configs/page';
 
 export function getIndexPage(req: Request, res: Response) {
+
+  res.send(`<h1>首页，待完善</h1>`);
+}
+
+export function getSourceListPage(req: Request, res: Response) {
   const page: number = Number(req.query.page) || 1;
   const pageSize: number = Number(req.query.page_size) || 10;
   const keyword: string = req.query.keyword === undefined ? '' : String(req.query.keyword);
 
   const videoTableInfo = videoService.getPaginationList(page, pageSize, keyword);
 
-  res.render('index.ejs', {
-    title: pageConfig.index.title,
+  res.render('sourceList.ejs', {
+    title: pageConfig.sourceList.title,
     navList: pageConfig.common.navList,
-    sourceTableHead: pageConfig.index.sourceTableHead,
+    sourceTableHead: pageConfig.sourceList.sourceTableHead,
     videoTableInfo,
     path: req.path,
     keyword,
-    scripts: pageConfig.index.scripts,
+    scripts: pageConfig.sourceList.scripts,
     stylesheets: [
-      ...pageConfig.index.stylesheets
+      ...pageConfig.sourceList.stylesheets
     ]
   });
 }
