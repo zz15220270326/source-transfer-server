@@ -1,6 +1,6 @@
 <li class="page-list-item" data-index="<%= index %>">
   <div class="page-cover">
-    <a href="<%= item.href %>">
+    <a href="<%= item.href %>" target="<%= isBlank ? '_blank' : '' %>">
       <% if (item.banner) { %>
         <img src="<%= item.banner %>" alt="<%= item.title %>" />
       <% } %>

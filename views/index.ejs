@@ -1,13 +1,21 @@
 <%- include('common/head.ejs', { title, stylesheets }) %>
 
   <%- include('common/page/PageHeader.ejs', {
-    title
+    pageTitle,
+    pageIcon
   }) %>
 
   <main class="container J_IndexPage">
     <div class="inner">
+      <h1>本站功能：</h1>
       <%- include('index/page-list/index.ejs', {
-        list: pageList
+        list: pageList,
+        isBlank: false
+      }) %>
+      <h1>相关内容推荐：</h1>
+      <%- include('index/page-list/index.ejs', {
+        list: relativeContentList,
+        isBlank: true
       }) %>
     </div>
   </main>

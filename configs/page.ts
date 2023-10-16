@@ -27,6 +27,8 @@ const pageConfig = {
 
   index: {
     title: '首页',
+    pageTitle: '张三的资源管理系统',
+    pageIcon: '/imgs/favicon.ico',
     pageList: [
       {
         title: '资源列表页面',
@@ -46,6 +48,14 @@ const pageConfig = {
         banner: '/imgs/netease-banner.jpg',
         href: '/transfer-audio'
       }
+    ],
+    relativeContentList: [
+      {
+        title: '我的个人博客',
+        description: '一些关于张三的个人介绍',
+        banner: '/imgs/blog-banner.jpg',
+        href: '//www.yuque.com/jackcheung-pshcv/at8wu2/index',
+      },
     ],
     stylesheets: [
       frontEndingHost + '/css/index.css',

@@ -9,7 +9,10 @@ import { getPaginationListData, orderByCreateTime } from '../libs/utils';
 export async function getIndexPage(req: Request, res: Response) {
   await res.render('index.ejs', {
     title: pageConfig.index.title,
+    pageTitle: pageConfig.index.pageTitle,
+    pageIcon: pageConfig.index.pageIcon,
     pageList: pageConfig.index.pageList,
+    relativeContentList: pageConfig.index.relativeContentList,
     scripts: [
       ...pageConfig.index.scripts
     ],
