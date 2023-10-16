@@ -6,8 +6,16 @@ import * as audioService from '../services/Audio';
 import pageConfig from '../configs/page';
 import { getPaginationListData, orderByCreateTime } from '../libs/utils';
 
-export function getIndexPage(req: Request, res: Response) {
-  res.send(`<h1>首页，待完善</h1>`);
+export async function getIndexPage(req: Request, res: Response) {
+  await res.render('index.ejs', {
+    title: pageConfig.index.title,
+    scripts: [
+      ...pageConfig.index.scripts
+    ],
+    stylesheets: [
+      ...pageConfig.index.stylesheets
+    ]
+  });
 }
 
 export function getSourceListPage(req: Request, res: Response) {

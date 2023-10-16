@@ -25,6 +25,36 @@ const pageConfig = {
     ],
   },
 
+  index: {
+    title: '首页',
+    pageList: [
+      {
+        title: '资源列表页面',
+        description: '一个可以统一管理资源列表的页面（查询资源列表，查询资源详情，删除资源）',
+        banner: '',
+        href: '/source-list'
+      },
+      {
+        title: 'B站视频上传页面',
+        description: '一个可以将B站视频(*.m4s)转化为 MP4 资源的页面（上传 & 转化）',
+        banner: '',
+        href: '/transfer-video'
+      },
+      {
+        title: '网易音乐上传页面',
+        description: '一个可以将网易音乐(*.ncm)转化为 MP3 资源的页面（上传 & 转化）',
+        banner: '',
+        href: '/transfer-audio'
+      }
+    ],
+    stylesheets: [
+      frontEndingHost + '/css/index.css',
+    ],
+    scripts: [
+      frontEndingHost + '/js/index.js',
+    ],
+  },
+
   sourceList: {
     title: '资源列表',
     sourceTableHead: [
@@ -97,67 +127,6 @@ const pageConfig = {
     ],
     scripts: [
       frontEndingHost + '/js/sourceList.js',
-    ],
-  },
-
-  index: {
-    title: '首页',
-    sourceTableHead: [
-      {
-        key: 'id',
-        label: 'ID',
-        width: '100px',
-        align: 'left'
-      },
-      {
-        key: 'originalname',
-        label: '资源名称',
-        width: '300px',
-        align: 'left'
-      },
-      {
-        key: 'sourceType',
-        label: '资源类型',
-        width: '100px',
-        align: 'left'
-      },
-      {
-        key: 'banner',
-        label: '资源封面',
-        width: '280px',
-        align: 'left'
-      },
-      {
-        key: 'playUrl',
-        label: '资源链接',
-        // width: '500px',
-        width: '250px',
-        align: 'left'
-      },
-      {
-        key: 'ctime',
-        label: '创建时间',
-        align: 'left',
-        width: '320px'
-      },
-      {
-        key: 'mtime',
-        label: '修改时间',
-        align: 'left',
-        width: '320px',
-      },
-      {
-        key: 'operations',
-        label: '操作',
-        align: 'left',
-        width: '200px'
-      }
-    ],
-    stylesheets: [
-      frontEndingHost + '/css/index.css',
-    ],
-    scripts: [
-      frontEndingHost + '/js/index.js',
     ],
   },
 
