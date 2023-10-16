@@ -158,7 +158,18 @@ const pageConfig = {
     scripts: [
       frontEndingHost + '/js/audioTransfer.js',
     ],
-  }
+  },
+
+  detail: {
+    title: '详情',
+    pageTitle: '张三的资源管理系统-详情页',
+    stylesheets: [
+      frontEndingHost + '/css/detail.css',
+    ],
+    scripts: [
+      frontEndingHost + '/js/detail.js',
+    ],
+  },
 };
 
 export default pageConfig;

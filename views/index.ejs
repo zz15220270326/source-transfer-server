@@ -22,4 +22,9 @@
 
   <%- include('common/page/PageFooter.ejs', {}) %>
 
+  <!-- 引入脚本 -->
+  <% for (let script of scripts) { %>
+    <script type="text/javascript" src="<%= script %>"></script>
+  <% } %>
+
 <%- include('common/foot.ejs') %>

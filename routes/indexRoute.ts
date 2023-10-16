@@ -8,5 +8,6 @@ router.get('/', controller.getIndexPage);
 router.get('/source-list', controller.getSourceListPage);
 router.get('/transfer-video', controller.getVideoTransferPage);
 router.get('/transfer-audio', controller.getAudioTransferPage);
+router.get('/detail/:id', controller.getDetailPage);
 
 export default router;

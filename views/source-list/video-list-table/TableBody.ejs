@@ -20,7 +20,8 @@
 
           <% if (td.key === 'playUrl') { %>
             <%- include('table-body/NavLink.ejs', {
-              href: tr[td.key],
+              // href: tr[td.key],
+              href: `/detail/${tr.id}`,
               linkTip: tr.sourceType === 'video' ? '点击跳转视频播放页' : '跳转音频播放详情页'
             }) %>
           <% } %>

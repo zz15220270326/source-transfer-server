@@ -75,3 +75,22 @@ export function getAudioTransferPage(req: Request, res: Response) {
     ]
   });
 }
+
+export function getDetailPage(req: Request, res: Response) {
+  const { id } = req.params;
+  const totalList = [
+    ...videoService.getFilterVideos(),
+    ...audioService.getFilterAudios()
+  ];
+  const curItem = totalList.find(item => item.id == id);
+
+  res.render('detail.ejs', {
+    title: pageConfig.detail.title,
+    pageTitle: pageConfig.detail.pageTitle,
+    item: curItem,
+    scripts: pageConfig.detail.scripts,
+    stylesheets: [
+      ...pageConfig.detail.stylesheets
+    ]
+  });
+}
