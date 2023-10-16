@@ -5,6 +5,28 @@
 
 <div class="container J_AudioTransferPage">
   <%- include('common/nav/index.ejs', { navList, path }) %>
+
+  <header class="top-desc">
+    <h1>网易云音频上传</h1>
+  </header>
+
+  <!-- 上传单个音频 -->
+  <div class="upload-box J_SingleAudioUploadTransfer">
+    <h2>单个音频文件上传</h2>
+    <%- include('audio-transfer/uploader/index.ejs', {
+      multiple: false,
+    }) %>
+    <%- include('audio-transfer/btn-group/index.ejs', {}) %>
+  </div>
+  <!-- 上传多个音频 -->
+  <div class="upload-box J_MultiAudioUploadTransfer" style="display: none;">
+    <h2>单个音频文件上传</h2>
+    <%- include('audio-transfer/uploader/index.ejs', {
+      multiple: false,
+    }) %>
+    <%- include('audio-transfer/btn-group/index.ejs', {}) %>
+  </div>
+
 </div>
 
 <!-- 引入脚本 -->
