@@ -1,0 +1,13 @@
+<li class="page-list-item" data-index="<%= index %>">
+  <div class="page-cover">
+    <a href="<%= item.href %>">
+      <% if (item.banner) { %>
+        <img src="<%= item.banner %>" alt="<%= item.title %>" />
+      <% } %>
+    </a>
+  </div>
+  <div class="page-content">
+    <h2 class="page-title"><%= item.title %></h2>
+    <p class="page-description"><%= item.description %></p>
+  </div>
+</li>

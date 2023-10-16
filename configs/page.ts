@@ -31,19 +31,19 @@ const pageConfig = {
       {
         title: '资源列表页面',
         description: '一个可以统一管理资源列表的页面（查询资源列表，查询资源详情，删除资源）',
-        banner: '',
+        banner: '/imgs/source-list-banner.jpg',
         href: '/source-list'
       },
       {
         title: 'B站视频上传页面',
         description: '一个可以将B站视频(*.m4s)转化为 MP4 资源的页面（上传 & 转化）',
-        banner: '',
+        banner: '/imgs/bilibili-banner.jpg',
         href: '/transfer-video'
       },
       {
         title: '网易音乐上传页面',
         description: '一个可以将网易音乐(*.ncm)转化为 MP3 资源的页面（上传 & 转化）',
-        banner: '',
+        banner: '/imgs/netease-banner.jpg',
         href: '/transfer-audio'
       }
     ],

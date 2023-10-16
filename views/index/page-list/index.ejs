@@ -1,0 +1,10 @@
+<ul class="page-list J_PageList">
+  <% for (let i = 0; i < list.length; i++) { %>
+    <% var item = list[i]; %>
+    <%- include('./Item.ejs', {
+      index: i,
+      item: item,
+    }) %>
+  <% } %>
+
+</ul>

@@ -1,7 +1,17 @@
 <%- include('common/head.ejs', { title, stylesheets }) %>
 
-  <div class="container J_IndexPage">
-    <h1>首页，待完善</h1>
-  </div>
+  <%- include('common/page/PageHeader.ejs', {
+    title
+  }) %>
+
+  <main class="container J_IndexPage">
+    <div class="inner">
+      <%- include('index/page-list/index.ejs', {
+        list: pageList
+      }) %>
+    </div>
+  </main>
+
+  <%- include('common/page/PageFooter.ejs', {}) %>
 
 <%- include('common/foot.ejs') %>
