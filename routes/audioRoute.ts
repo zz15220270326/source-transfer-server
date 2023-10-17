@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import * as controller from '../controllers/Audios';
+import * as controller from '../controllers/Audio';
 import { uploadSingleVideo } from '../middlewares';
 
 const router = Router();
