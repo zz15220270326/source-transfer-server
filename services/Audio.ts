@@ -1,3 +1,4 @@
+import { unlinkSync } from 'fs';
 import * as paths from '../configs/paths';
 import {
   outputMp3ByNCM,
@@ -112,4 +113,26 @@ export function getFilterAudios(keyword?: string, sourceType?: string) {
     console.log(error);
     return [];
   }
+}
+
+/**
+ * 删除音频
+ */
+export function removeAudio(id: string) {
+  // 处理 JSON 文件
+  const audioList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
+  const removeItem = audioList.find(item => item.id == id);
+  const newAudioList = audioList.filter(item => item.id !== id);
+  writeJsonFileSync(newAudioList, paths.audioJsonPath);
+
+  if (removeItem) {
+    const { filename } = removeItem;
+    // 删除音频资源
+    unlinkSync(paths.audioDir + '/' + filename + '.mp3');
+
+    // 删除音频封面
+    unlinkSync(paths.audioImgDir + '/' + filename + '.png');
+  }
+
+  return true;
 }

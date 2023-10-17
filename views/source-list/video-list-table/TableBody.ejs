@@ -1,6 +1,12 @@
 <tbody class="list-table-body">
   <% for (let i = 0; i < tableData.length; i++) { let tr = tableData[i]; %>
-    <tr class="list-table-row" data-index="<%= i %>">
+    <tr
+      class="list-table-row"
+      data-index="<%= i %>"
+      data-id="<%= tr.id %>"
+      data-name="<%= tr.originalname %>"
+      data-type="<%= tr.sourceType %>"
+    >
       <% for (let td of tableHead) { %>
         <td class="list-table-data" data-key="<%= td.key %>">
           <% if (td.key === 'operations') { %>
@@ -40,7 +46,13 @@
             }) %>
           <% } %>
           
-          <% if (['ctime', 'mtime', 'originalname', 'name'].includes(td.key)) { %>
+          <% if (td.key === 'originalname') { %>
+            <strong>
+              <%= tr[td.key] ? tr[td.key].replace(/\.(.+)$/, '') : '' %>
+            </strong>
+          <% } %>
+
+          <% if (['ctime', 'mtime', 'name'].includes(td.key)) { %>
             <span><%= tr[td.key] %></span>
           <% } %>
         </td>

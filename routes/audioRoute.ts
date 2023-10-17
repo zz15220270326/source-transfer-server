@@ -10,5 +10,6 @@ router.post('/', controller.showIndexContent);
 router.post('/transfer-ncm-to-mp3', uploadSingleVideo, controller.transferNcmAudio);
 router.get('/get-audio-list', controller.getPaginationAudioList);
 router.post('/get-audio-list', controller.getPaginationAudioList);
+router.delete('/remove-audio/:id', controller.removeAudio);
 
 export default router;

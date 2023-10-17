@@ -55,3 +55,24 @@ export async function getPaginationAudioList(req: Request, res: Response) {
     });
   }
 }
+
+export async function removeAudio(req: Request, res: Response) {
+  const { id } = req.params;
+
+  try {
+    if (!id) {
+      throw new Error('id is required');
+    }
+    service.removeAudio(id);
+    res.send({
+      msg: 'ok',
+      code: 0
+    });
+  } catch (e) {
+    const errMsg: string = e instanceof Error ? e.message : `${e}`;
+    res.send({
+      code: -1,
+      msg: `删除失败：${errMsg}`
+    });
+  }
+}
