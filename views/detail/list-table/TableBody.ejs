@@ -1,0 +1,42 @@
+<tbody class="detail-info-table-body" align="left">
+  <tr class="detail-info-table-body-row">
+    <td width="80px">ID</td>
+    <td width="auto"><%= item.id %></td>
+  </tr>
+  <tr class="detail-info-table-body-row">
+    <td>资源名称</td>
+    <td>
+      <%= item.originalname %>
+    </td>
+  </tr>
+  <tr class="detail-info-table-body-row">
+    <td>资源大小</td>
+    <td><%= item.size %></td>
+  </tr>
+  <tr class="detail-info-table-body-row">
+    <td>资源类型</td>
+    <td>
+      <%=
+        item.sourceType === 'audio'
+        ?
+        '音频'
+        :
+        item.sourceType === 'video'
+        ?
+        '视频'
+        :
+        ''
+      %>
+    </td>
+  </tr>
+  <tr class="detail-info-table-body-row">
+    <td>封面图片</td>
+    <td>
+      <%- include('./table-body/Banner.ejs', { item }) %>
+    </td>
+  </tr>
+  <tr class="detail-info-table-body-row">
+    <td>创建时间</td>
+    <td><%= item.ctime %></td>
+  </tr>
+</tbody>

@@ -1,0 +1,6 @@
+<% if (item.sourceType == 'video') { %>
+  <%- include('./ShowVideo.ejs', { item }) %>
+<% } %>
+<% if (item.sourceType == 'audio') { %>
+  <%- include('./ShowAudio.ejs', { item }) %>
+<% } %>

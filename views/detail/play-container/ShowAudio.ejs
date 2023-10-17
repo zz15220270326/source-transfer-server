@@ -1,0 +1,15 @@
+<video
+  style="box-shadow: 0 0 3px #ddd;"
+  height="450px"
+  width="600px"
+  class="play-comp"
+  controls="controls"
+  crossorigin="crossorigin"
+  poster="<%= item.banner %>"
+>
+  <source src="<%= item.playUrl %>" type="audio/mpeg" />
+  <p>
+    Your browser doesn't support HTML5 audio. Here is a
+    <a href="<%= item.playUrl %>">link to the audio</a> instead.
+  </p>
+</video>
