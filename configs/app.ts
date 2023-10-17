@@ -1,7 +1,8 @@
+import { join } from 'path';
 import { getIpv4Address } from '../libs/utils';
 
 /** 静态资源公共路径 */
-export const publicAssetsDir = 'public';
+export const publicAssetsDir = join(__dirname, '../public');
 
 /** 视图模板引擎 */
 export const viewEngine = 'ejs';
