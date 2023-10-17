@@ -27,6 +27,6 @@ app.use(appConfig.routeModules.index, indexRoute);
 app.use(appConfig.routeModules.videos, videoRoute);
 app.use(appConfig.routeModules.audios, audioRoute);
 
-app.listen(appConfig.port, () => {
+app.listen(appConfig.port, appConfig.ipAddress, () => {
   console.log(appConfig.appStartLog);
 });
