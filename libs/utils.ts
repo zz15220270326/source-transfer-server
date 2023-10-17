@@ -8,9 +8,11 @@ export * from './modules/logs';
 /**
  * 根据列表获取分页数据
  */
-export function getPaginationListData<T>(origin: T[], page: number, pageSize: number) {
+export function getPaginationListData<T>(origin: T[], page: number, initialPageSize: number) {
+  const pageSize = initialPageSize < 5 ? 5 : initialPageSize;
+
   const start = (page - 1) * pageSize;
-  const end = page * pageSize;
+  const end = page * (pageSize < 5 ? 5 : pageSize);
   const total = origin.length;
   const totalPage = Math.ceil(total / pageSize);
 
