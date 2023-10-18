@@ -27,7 +27,7 @@ export const frontEndingHost = process.env.NODE_ENV === 'development'
                              ? `http://localhost:9241`
                              : process.env.NODE_ENV === 'test'
                              ? `http://${getIpv4Address()}:9241`
-                             : 'https://xianshangyumingdizhi.com';
+                             : `http://${getIpv4Address()}:9241`; // https://xianshangyumingdizhi.com
 
 /** 启动后的提示信息 */
 export const appStartLog = `
