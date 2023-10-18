@@ -1,4 +1,23 @@
+import { networkInterfaces } from 'os';
 import { resolve, join } from 'path';
+
+const ipv4Address: string = (() => {
+  const interfaces = networkInterfaces();
+
+  for (const devName in interfaces) {
+    const iface = interfaces[devName];
+
+    for (let i = 0; i < iface.length; i++) {
+      const alias = iface[i];
+
+      if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+        return alias.address;
+      }
+    }
+  }
+
+  return '0.0.0.0';
+})();
 
 /** 视频读取的路径 */
 export const originDir = resolve(__dirname, '../origin');
@@ -13,7 +32,7 @@ export const videoDir = resolve(__dirname, '../public/videos');
 export const videoImgDir = resolve(__dirname, '../public/videos/img');
 
 /** 视频访问的基础路径 */
-export const videoBaseUrl = process.env.NODE_ENV === 'production' ? '/videos/' : 'http://localhost:9240/videos/';
+export const videoBaseUrl = process.env.NODE_ENV === 'production' ? '/videos/' : `http://${ipv4Address}:9240/videos/`;
 
 /** 记录视频信息的 JSON 文件路径 */
 export const videoJsonPath = videoDir + '/' + 'data.json';
@@ -30,7 +49,7 @@ export const audioDir = resolve(__dirname, '../public/audios');
 export const audioImgDir = resolve(__dirname, '../public/audios/img');
 
 /** 音频访问的基础路径 */
-export const audioBaseUrl = process.env.NODE_ENV === 'production' ? '/videos/' : 'http://localhost:9240/audios/';
+export const audioBaseUrl = process.env.NODE_ENV === 'production' ? '/videos/' : `http://${ipv4Address}:9240/audios/`;
 
 /** 记录音频信息的 JSON 文件路径 */
 export const audioJsonPath = audioDir + '/' + 'data.json';

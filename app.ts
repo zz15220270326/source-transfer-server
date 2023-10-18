@@ -15,12 +15,13 @@ const app: Application = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// 通用的中间件
+app.all('*', middlewares.statApiTime);
+app.all('*', middlewares.setHeaders);
+
 // 设置渲染的模板引擎
 app.use(express.static(appConfig.publicAssetsDir));
 app.set('view engine', appConfig.viewEngine);
-
-app.all('*', middlewares.statApiTime);
-app.all('*', middlewares.setHeaders);
 
 // register routers
 app.use(appConfig.routeModules.index, indexRoute);
