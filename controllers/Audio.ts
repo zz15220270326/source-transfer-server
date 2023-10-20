@@ -33,6 +33,34 @@ export async function transferNcmAudio(req: Request, res: Response) {
   }
 }
 
+export async function transferNcmVideos(req: Request, res: Response) {
+  try {
+    const files = req.files;
+
+    if (!Array.isArray(files)) {
+      throw new TypeError('"files" must to be an array for transfer!!!');
+    }
+    if (files.length > 10) {
+      throw new Error(`"Files" \s size can not over than 10!!!`);
+    }
+
+    const data = await service.transferNcmAudioList(files);
+
+    res.send({
+      code: 0,
+      msg: 'ok',
+      data,
+    });
+  } catch (e) {
+    const errMsg: string = e instanceof Error ? e.message : `${e}`;
+
+    res.send({
+      code: -1,
+      msg: `转码出错啦：${errMsg}`
+    });
+  }
+}
+
 export async function getPaginationAudioList(req: Request, res: Response) {
   const param = req.method.toLowerCase() === 'get' ? req.query : req.body;
   const page: number = Number(param.page) || 1;

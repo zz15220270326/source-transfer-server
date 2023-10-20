@@ -16,6 +16,7 @@ import {
 /**
  * @function transferNcmAudio
  * @description 将 NCM 视频转成 Mp3
+ * @param {} file 上传的文件
  * @param { boolean | undefined } multiple 是否上传多个
  */
 export async function transferNcmAudio(file: Express.Multer.File, multiple: boolean = false) {
@@ -73,6 +74,66 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
       }
     };
   }
+}
+
+/**
+ * @function transferNcmAudioList
+ * @description 将 多个NCM 视频转成 多个Mp3
+ */
+export async function transferNcmAudioList(files: Express.Multer.File[]) {
+  const data: Record<string, any>[] = [];
+  for (let file of files) {
+    const { originalname, filename, size, path } = file;
+    const outputMp3Path: string = paths.audioDir + '/' + filename + '.mp3';
+    const outputMp3BannerPath: string = paths.audioImgDir + '/' + filename + '.png';
+
+    mkdirIfNotExist(paths.audioImgDir);
+    touchFileIfNotExist(paths.audioJsonPath, []);
+
+    outputMp3ByNCM(path, outputMp3Path, outputMp3BannerPath);
+
+    const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
+    const fileInfo = {
+      id: `audio-${prevFileList.length + 1}`,
+      originalname,
+      filename,
+      size,
+      type: 'audio',
+      playUrl: paths.audioBaseUrl + filename + '.mp3',
+      banner: paths.audioBaseUrl + 'img/' + filename + '.png',
+      createTime: Date.now(),
+      updateTime: -1
+    };
+    const fileIdx = prevFileList.findIndex(item => item.originalname === fileInfo.originalname);
+    if (fileIdx !== -1) {
+      const newFileList = prevFileList.map((item, index) => {
+        if (index === fileIdx) {
+          fileInfo.id = item.id;
+          fileInfo.createTime = item.createTime;
+          fileInfo.updateTime = Date.now();
+          return fileInfo;
+        }
+        return item;
+      });
+      writeJsonFileSync(newFileList, paths.audioJsonPath);
+    } else {
+      const newFileList = [...prevFileList, fileInfo];
+      writeJsonFileSync(newFileList, paths.audioJsonPath);
+    }
+
+    data.push({
+      name: originalname.replace(/\.(.+)$/, ''),
+      playUrl: fileInfo.playUrl,
+      banner: fileInfo.banner,
+    });
+  }
+
+  setTimeout(() => {
+    initOriginDir();
+    initTargetDir();
+  });
+
+  return data;
 }
 
 /**
