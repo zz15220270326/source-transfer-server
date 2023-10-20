@@ -6,9 +6,14 @@ const formVideoUpload = multer({
   dest: paths.originDir,
   fileFilter: (req, file, callback) => {
     const { originalname } = file;
-    if (!req.files) {
-      file.originalname = Buffer.from(originalname, 'latin1').toString('utf8');
-    }
+    // if (!req.files) {
+    //   file.originalname = Buffer.from(originalname, 'latin1').toString('utf8');
+    // }
+    file.originalname = Buffer.from(originalname, 'latin1').toString('utf8');
+    console.log('=== transfer ===', {
+      prev: originalname,
+      cur: file.originalname
+    });
     callback(null, true);
   },
   // storage: multer.diskStorage({

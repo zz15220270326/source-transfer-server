@@ -19,10 +19,10 @@
     <%- include('audio-transfer/btn-group/index.ejs', {}) %>
   </div>
   <!-- 上传多个音频 -->
-  <div class="upload-box J_MultiAudioUploadTransfer" style="display: none;">
-    <h2>单个音频文件上传</h2>
+  <div class="upload-box J_MultiAudioUploadTransfer">
+    <h2>多个音频文件上传</h2>
     <%- include('audio-transfer/uploader/index.ejs', {
-      multiple: false,
+      multiple: true,
     }) %>
     <%- include('audio-transfer/btn-group/index.ejs', {}) %>
   </div>
