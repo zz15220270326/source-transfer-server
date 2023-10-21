@@ -2,7 +2,7 @@
   <div class="page-cover">
     <a href="<%= item.href %>" target="<%= isBlank ? '_blank' : '' %>">
       <% if (item.banner) { %>
-        <img src="<%= item.banner %>" alt="<%= item.title %>" />
+        <img src="/imgs/lazyload.webp" data-src="<%= item.banner %>" alt="<%= item.title %>" />
       <% } %>
     </a>
   </div>
