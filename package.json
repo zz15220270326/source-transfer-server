@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only --ignore-watch node_modules app.ts",
     "clear-source": "rm -rf target origin && mkdir target origin",
-    "build": "tsc **.ts --outDir ./dist -esModuleInterop && cp -r public ./dist/",
+    "build": "tsc **.ts --outDir ./dist -esModuleInterop",
     "test": "NODE_ENV=test pm2 start ./dist/app.js"
   },
   "keywords": [],

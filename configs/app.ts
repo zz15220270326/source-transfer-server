@@ -1,8 +1,10 @@
 import { join } from 'path';
 import { getIpv4Address } from '../libs/utils';
 
+const isProduction: boolean = process.env.NODE_ENV !== 'development';
+
 /** 静态资源公共路径 */
-export const publicAssetsDir = join(__dirname, '../public');
+export const publicAssetsDir = isProduction ? join(__dirname, '../../public') : join(__dirname, '../public');
 
 /** 视图模板引擎 */
 export const viewEngine = 'ejs';
