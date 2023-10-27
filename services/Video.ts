@@ -19,6 +19,7 @@ import {
   writeJsonFileSync,
   getFormatTime,
   filterSourceList,
+  createVideoId,
 } from '../libs/utils';
 
 /**
@@ -54,7 +55,7 @@ export async function transferVideoFileAndGetVideoUrl(
 
   const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.videoJsonPath);
   const fileInfo = {
-    id: `video-${prevFileList.length + 1}`,
+    id: createVideoId(originVideoName),
     originalname: originVideoName,
     filename,
     size: 'unknown',

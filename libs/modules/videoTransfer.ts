@@ -5,6 +5,7 @@ import {
   copyFileSync
 } from 'fs';
 import { join } from 'path';
+import { createHash } from 'crypto';
 
 import Ffmpeg from 'fluent-ffmpeg';
 
@@ -164,4 +165,15 @@ export function filterSourceList(
     .sort((a, b) => b.createTime - a.createTime);
 
   return filterVideoList;
+}
+
+/**
+ * @function createVideoId
+ * @description 创建视频 id
+ * @param {string} originalname 音频原来到的名称
+ */
+export function createVideoId(originalname: string) {
+  const md5 = createHash('md5');
+  md5.update(originalname);
+  return `video-${md5.digest('hex')}`;
 }

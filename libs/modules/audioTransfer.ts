@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs';
-import { createDecipheriv } from 'crypto';
+import { createDecipheriv, createHash } from 'crypto';
 
 /**
  * 网易云音乐转码
@@ -105,4 +105,15 @@ export function outputMp3ByNCM(
   }
 
   writeFileSync(outputPath, audioData);
+}
+
+/**
+ * @function createAudioId
+ * @description 创建音频 id
+ * @param {string} originalname 音频原来到的名称
+ */
+export function createAudioId(originalname: string) {
+  const md5 = createHash('md5');
+  md5.update(originalname);
+  return `audio-${md5.digest('hex')}`;
 }

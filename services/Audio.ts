@@ -10,7 +10,8 @@ import {
   writeJsonFileSync,
   encryptFileName,
   getPaginationListData,
-  filterSourceList
+  filterSourceList,
+  createAudioId
 } from '../libs/utils';
 
 /**
@@ -35,7 +36,7 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
 
     const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
     const fileInfo = {
-      id: `audio-${prevFileList.length + 1}`,
+      id: createAudioId(originalname),
       originalname,
       filename,
       size,
@@ -94,7 +95,7 @@ export async function transferNcmAudioList(files: Express.Multer.File[]) {
 
     const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
     const fileInfo = {
-      id: `audio-${prevFileList.length + 1}`,
+      id: createAudioId(originalname),
       originalname,
       filename,
       size,
