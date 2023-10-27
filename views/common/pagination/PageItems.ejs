@@ -1,0 +1,70 @@
+<!-- 页面比较少的时候的渲染情况 -->
+<% if (totalPage < 8) { %>
+  <% for (var i = 1; i <= totalPage; i++) { %>
+    <li class="pagination-list-item <%= i == page ? 'active' : '' %>">
+      <a class="pagination-list-item-link" href="javascript:;" data-index="<%= i - 1 %>">
+        <%= i %>
+      </a>
+    </li>
+  <% } %>
+<% } %>
+
+<% if (totalPage >= 8) { %>
+  
+  <!-- 最先几页 -->
+  <% if (parseInt(page) < 5) { %>
+    <% for (var i = 1; i <= 5; i++) { %>
+      <li class="pagination-list-item <%= i == page ? 'active' : '' %>">
+        <a class="pagination-list-item-link" href="javascript:;" data-index="<%= i - 1 %>">
+          <%= i %>
+        </a>
+      </li>
+    <% } %>
+    <span class="pagination-list-replacer">...</span>
+    <li class="pagination-list-item">
+      <a class="pagination-list-item-link" href="javascript:;" data-index="<%= totalPage - 1 %>">
+        <%= totalPage %>
+      </a>
+    </li>
+  <% } %>
+
+  <!-- 中间页 -->
+  <% if (parseInt(page) >= 5 && parseInt(page) <= parseInt(totalPage) - 5) { %>
+    <li class="pagination-list-item">
+      <a class="pagination-list-item-link" href="javascript:;" data-index="0">
+        1
+      </a>
+    </li>
+    <span class="pagination-list-replacer">...</span>
+    <% for (var i = page - 2; i <= page + 2; i++) { %>
+      <li class="pagination-list-item <%= i == page ? 'active' : '' %>">
+        <a class="pagination-list-item-link" href="javascript:;" data-index="<%= i - 1 %>">
+          <%= i %>
+        </a>
+      </li>
+    <% } %>
+    <span class="pagination-list-replacer">...</span>
+    <li class="pagination-list-item">
+      <a class="pagination-list-item-link" href="javascript:;" data-index="<%= totalPage - 1 %>">
+        <%= totalPage %>
+      </a>
+    </li>
+  <% } %>
+
+  <!-- 最后几页 -->
+  <% if (parseInt(page) > parseInt(totalPage) - 5) { %>
+    <li class="pagination-list-item">
+      <a class="pagination-list-item-link" href="javascript:;" data-index="0">
+        1
+      </a>
+    </li>
+    <span class="pagination-list-replacer">...</span>
+    <% for (var i = totalPage - 5; i <= totalPage; i++) { %>
+      <li class="pagination-list-item <%= i == page ? 'active' : '' %>">
+        <a class="pagination-list-item-link" href="javascript:;" data-index="<%= i - 1 %>">
+          <%= i %>
+        </a>
+      </li>
+    <% } %>
+  <% } %>
+<% } %>

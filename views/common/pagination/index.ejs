@@ -1,12 +1,9 @@
 <div class="pagination-container">
   <ul class="pagination-list">
-    <% for (var i = 1; i <= totalPage; i++) { %>
-      <li class="pagination-list-item <%= i == page ? 'active' : '' %>">
-        <a class="pagination-list-item-link" href="javascript:;" data-index="<%= i - 1 %>">
-          <%= i %>
-        </a>
-      </li>
-    <% } %>
+    <%- include('./PageItems.ejs', {
+      page,
+      totalPage,
+    }) %>
   </ul>
   <div class="pagination-info">
     <span class="pagination-info-text">
