@@ -51,11 +51,17 @@ const pageConfig = {
     ],
     relativeContentList: [
       {
-        title: '我的个人博客',
+        title: '我的语雀博客',
         description: '一些关于张三的个人介绍',
         banner: '/imgs/blog-banner.jpg',
         href: '//www.yuque.com/jackcheung-pshcv/at8wu2/index',
       },
+      {
+        title: '我的掘金',
+        description: '对外的掘金技术交流',
+        banner: '//p6-passport.byteacctimg.com/img/user-avatar/714b47c68e75465a5c5108aa8a7887b2~300x300.image',
+        href: '//juejin.cn/user/4309726841287277',
+      }
     ],
     stylesheets: [
       frontEndingHost + '/css/index.css',
