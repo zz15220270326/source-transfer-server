@@ -20,6 +20,8 @@ const pageConfig = {
         path: '/transfer-audio'
       }
     ],
+    /** 备案信息 */
+    beian: `粤ICP备2023123390号`,
     stylesheets: [
       frontEndingHost + '/css/reset.css'
     ],

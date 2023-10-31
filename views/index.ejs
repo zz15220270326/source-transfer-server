@@ -22,7 +22,9 @@
 
   <%- include('common/backTop.ejs', {}) %>
 
-  <%- include('common/page/PageFooter.ejs', {}) %>
+  <%- include('common/page/PageFooter.ejs', {
+    beian
+  }) %>
 
   <!-- 引入脚本 -->
   <% for (let script of scripts) { %>

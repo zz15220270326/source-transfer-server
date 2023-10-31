@@ -8,6 +8,7 @@ import { getPaginationListData, orderByCreateTime } from '../libs/utils';
 
 export async function getIndexPage(req: Request, res: Response) {
   await res.render('index.ejs', {
+    beian: pageConfig.common.beian,
     title: pageConfig.index.title,
     pageTitle: pageConfig.index.pageTitle,
     pageIcon: pageConfig.index.pageIcon,

@@ -17,7 +17,7 @@ export function outputMp3ByNCM(
   let start = 0;
   let buff = Buffer.from(content);
 
-  // 1.读取8字节,获取 magic header
+  // 1. 读取8字节,获取 magic header
   let temp = buff.slice(start, start + 8);
   start += 10; // 空余 2 字节
   let header = Buffer.from([0x43, 0x54, 0x45, 0x4E, 0x46, 0x44, 0x41, 0x4D]);
@@ -25,10 +25,10 @@ export function outputMp3ByNCM(
     throw new Error('文件头已损坏');
   }
 
-  // 读取 32 位 4字节的密钥长度
+  // 2. 读取 32 位 4字节的密钥长度
   let keyLength = buff.readUInt32LE(start);
   start += 4;
-  //根据密钥长度读取密钥内容
+  //3. 根据密钥长度读取密钥内容
   temp = buff.slice(start, start + keyLength);
   let cipherText = temp.map(t => {
     return t ^ 0x64;
@@ -48,7 +48,7 @@ export function outputMp3ByNCM(
   let key2Len = keyData.length;
   keyData = Buffer.from(keyData);
 
-  // 将keyData 做 RC4-KSA 算法解密
+  // 将 keyData 做 RC4-KSA 算法解密
   let keyBox = Buffer.alloc(256);
   for (let i = 0; i < keyBox.length; i++) {
     keyBox[i] = i;
@@ -63,7 +63,7 @@ export function outputMp3ByNCM(
   let metaLen = buff.readUInt32LE(start);
   start += 4;
 
-  // 读取meta内容
+  // 读取 meta 内容
   let metaContent: any = buff.slice(start, start + metaLen);
   metaContent = metaContent.map((t: any) => t ^ 0x63);
 
