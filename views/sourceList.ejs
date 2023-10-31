@@ -1,10 +1,21 @@
 <%- include('common/head.ejs', { title, stylesheets }) %>
 
-  <div class="container J_SourceListPage">
+<%- include('common/page/PageHeader.ejs', {
+  pageTitle,
+  pageIcon
+}) %>
+
+<div class="container J_SourceListPage">
+  <div class="inner">
     <%- include('common/nav/index.ejs', { navList, path }) %>
     <%- include('source-list/search-bar/index.ejs', { keyword }) %>
     <%- include('source-list/video-list-table/index.ejs', {}) %>
   </div>
+</div>
+
+<%- include('common/page/PageFooter.ejs', {
+  beian
+}) %>
 
   <%- include('common/backTop.ejs', {}) %>
 

@@ -1,27 +1,38 @@
 <%- include('common/head.ejs', { title, stylesheets }) %>
+  <%- include('common/page/PageHeader.ejs', {
+    pageTitle,
+    pageIcon
+  }) %>
+
   <div class="container J_DetailPage">
-    <% if (item) { %>
-      <div class="container-item">
-        <h1 class="container-item-title"> 详情信息 </h1>
-  
-        <%- include('./detail/list-table/index.ejs', { item }) %>
-      </div>
-      <div class="container-item">
-        <h1 class="container-item-title"> 展示内容 </h1>
-  
-        <div class="play-container">
-          <%- include('./detail/play-container/index.ejs', { item }) %>
+    <div class="inner">
+      <% if (item) { %>
+        <div class="container-item">
+          <h1 class="container-item-title"> 详情信息 </h1>
+    
+          <%- include('./detail/list-table/index.ejs', { item }) %>
         </div>
-      </div>
-    <% } %>
-    <% if (!item) {%>
-      <%-
-        include('./common/noDataTip.ejs', {
-          title: '您查找的数据不存在!'
-        })
-      %>
-    <% } %>
+        <div class="container-item">
+          <h1 class="container-item-title"> 展示内容 </h1>
+    
+          <div class="play-container">
+            <%- include('./detail/play-container/index.ejs', { item }) %>
+          </div>
+        </div>
+      <% } %>
+      <% if (!item) {%>
+        <%-
+          include('./common/noDataTip.ejs', {
+            title: '您查找的数据不存在!'
+          })
+        %>
+      <% } %>
+    </div>
   </div>
+
+  <%- include('common/page/PageFooter.ejs', {
+    beian
+  }) %>
 
   <!-- 引入脚本 -->
   <% for (let script of scripts) { %>

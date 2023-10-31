@@ -3,44 +3,55 @@
   stylesheets
 }) %>
 
+<%- include('common/page/PageHeader.ejs', {
+  pageTitle,
+  pageIcon
+}) %>
+
 <div class="container J_AudioTransferPage">
-  <%- include('common/nav/index.ejs', { navList, path }) %>
+  <div class="inner">
+    <%- include('common/nav/index.ejs', { navList, path }) %>
 
-  <header class="top-desc">
-    <h1>网易云音频上传</h1>
-  </header>
-
-  <!-- 上传音频切换的 tab -->
-  <main class="switch-tab J_SwitchTab">
-    <nav class="switch-tab-nav">
-      <div class="switch-tab-nav-item">
-        <label for="J_SwitchSingle">单个音频文件上传</label>
-        <input id="J_SwitchSingle" type="radio" name="uploadType" data-value="single" checked />
-      </div>
-      <div class="switch-tab-nav-item">
-        <label for="J_SwitchMulti">多个音频文件上传</label>
-        <input id="J_SwitchMulti" type="radio" name="uploadType" data-value="multiple" />
-      </div>
+    <nav class="top-desc">
+      <h1>网易云音频上传</h1>
     </nav>
-    <!-- 上传单个音频 -->
-    <div class="upload-box tab-page-item active J_SingleAudioUploadTransfer" data-value="single">
-      <h2>单个音频文件上传</h2>
-      <%- include('audio-transfer/uploader/index.ejs', {
-        multiple: false,
-      }) %>
-      <%- include('audio-transfer/btn-group/index.ejs', {}) %>
-    </div>
-    <!-- 上传多个音频 -->
-    <div class="upload-box tab-page-item J_MultiAudioUploadTransfer" data-value="multiple">
-      <h2>多个音频文件上传</h2>
-      <%- include('audio-transfer/uploader/index.ejs', {
-        multiple: true,
-      }) %>
-      <%- include('audio-transfer/btn-group/index.ejs', {}) %>
-    </div>
-  </main>
+
+    <!-- 上传音频切换的 tab -->
+    <main class="switch-tab J_SwitchTab">
+      <nav class="switch-tab-nav">
+        <div class="switch-tab-nav-item">
+          <label for="J_SwitchSingle">单个音频文件上传</label>
+          <input id="J_SwitchSingle" type="radio" name="uploadType" data-value="single" checked />
+        </div>
+        <div class="switch-tab-nav-item">
+          <label for="J_SwitchMulti">多个音频文件上传</label>
+          <input id="J_SwitchMulti" type="radio" name="uploadType" data-value="multiple" />
+        </div>
+      </nav>
+      <!-- 上传单个音频 -->
+      <div class="upload-box tab-page-item active J_SingleAudioUploadTransfer" data-value="single">
+        <h2>单个音频文件上传</h2>
+        <%- include('audio-transfer/uploader/index.ejs', {
+          multiple: false,
+        }) %>
+        <%- include('audio-transfer/btn-group/index.ejs', {}) %>
+      </div>
+      <!-- 上传多个音频 -->
+      <div class="upload-box tab-page-item J_MultiAudioUploadTransfer" data-value="multiple">
+        <h2>多个音频文件上传</h2>
+        <%- include('audio-transfer/uploader/index.ejs', {
+          multiple: true,
+        }) %>
+        <%- include('audio-transfer/btn-group/index.ejs', {}) %>
+      </div>
+    </main>
+  </div>
 
 </div>
+
+<%- include('common/page/PageFooter.ejs', {
+  beian
+}) %>
 
 <!-- 引入脚本 -->
 <% for (let script of scripts) { %>

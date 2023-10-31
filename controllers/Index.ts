@@ -6,12 +6,16 @@ import * as audioService from '../services/Audio';
 import pageConfig from '../configs/page';
 import { getPaginationListData, orderByCreateTime } from '../libs/utils';
 
+const commonConfig = {
+  beian: pageConfig.common.beian,
+  pageTitle: pageConfig.index.pageTitle,
+  pageIcon: pageConfig.index.pageIcon,
+};
+
 export async function getIndexPage(req: Request, res: Response) {
   await res.render('index.ejs', {
-    beian: pageConfig.common.beian,
+    ...commonConfig,
     title: pageConfig.index.title,
-    pageTitle: pageConfig.index.pageTitle,
-    pageIcon: pageConfig.index.pageIcon,
     pageList: pageConfig.index.pageList,
     relativeContentList: pageConfig.index.relativeContentList,
     scripts: [
@@ -38,6 +42,7 @@ export function getSourceListPage(req: Request, res: Response) {
   const tableInfo = getPaginationListData(totalList, page, pageSize);
 
   res.render('sourceList.ejs', {
+    ...commonConfig,
     title: pageConfig.sourceList.title,
     navList: pageConfig.common.navList,
     sourceTypeList: pageConfig.sourceList.sourceTypeList,
@@ -55,6 +60,7 @@ export function getSourceListPage(req: Request, res: Response) {
 
 export function getVideoTransferPage(req: Request, res: Response) {
   res.render('videoTransfer.ejs', {
+    ...commonConfig,
     title: pageConfig.videoTransfer.title,
     navList: pageConfig.common.navList,
     path: req.path,
@@ -67,6 +73,7 @@ export function getVideoTransferPage(req: Request, res: Response) {
 
 export function getAudioTransferPage(req: Request, res: Response) {
   res.render('audioTransfer.ejs', {
+    ...commonConfig,
     title: pageConfig.audioTransfer.title,
     navList: pageConfig.common.navList,
     path: req.path,
@@ -86,6 +93,7 @@ export function getDetailPage(req: Request, res: Response) {
   const curItem = totalList.find(item => item.id == id);
 
   res.render('detail.ejs', {
+    ...commonConfig,
     title: pageConfig.detail.title,
     pageTitle: pageConfig.detail.pageTitle,
     item: curItem,
