@@ -13,6 +13,9 @@ public/videos/data.json
 public/audios/img/*
 public/audios/data.json
 
+*.tar.gz
+*.log
+
 # origin
 # target
 
