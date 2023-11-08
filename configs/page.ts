@@ -30,24 +30,24 @@ const pageConfig = {
   index: {
     title: '首页',
     pageTitle: '张三的资源管理系统',
-    pageIcon: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/favicon.ico?e=1698849639&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:DfR42lt4Qnjpj9UC-4aKBvAdMAU=',
+    pageIcon: '//source-manage-cdn.bklove-zz.cn/imgs/favicon.ico',
     pageList: [
       {
         title: '资源列表页面',
         description: '一个可以统一管理资源列表的页面（查询资源列表，查询资源详情，删除资源）',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/source-list-banner.jpg?e=1698848660&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:ua3lxJOZbjWNuQpm-a7O3qQwSWQ=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/source-list-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:7MGtUDoNXBNLlmH_x62TEz5m7f8=',
         href: '/source-list'
       },
       {
         title: 'B站视频上传页面',
         description: '一个可以将B站视频(*.m4s)转化为 MP4 资源的页面（上传 & 转化）',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/bilibili-banner.jpg?e=1698848693&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:A2zsXOTJjLzdToAjSYEhZQpNz_g=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/bilibili-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:XqSNO5WqDbVNh7cO9LHSbMIfdMg=',
         href: '/transfer-video'
       },
       {
         title: '网易音乐上传页面',
         description: '一个可以将网易音乐(*.ncm)转化为 MP3 资源的页面（上传 & 转化）',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/netease-banner.jpg?e=1698848720&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:2XMYcNEcnmWHc7U1_6mkXP0xsNQ=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/netease-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:_dl0Hs-7GHOvijG2YeN74F95mIM=',
         href: '/transfer-audio'
       }
     ],
@@ -55,19 +55,19 @@ const pageConfig = {
       {
         title: '我的语雀博客',
         description: '一些关于张三的个人介绍',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/blog-banner.jpg?e=1698848768&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:kyGjzjcgkfyuGus-GBd3r0weQgw=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/blog-banner.jpg',
         href: '//www.yuque.com/jackcheung-pshcv/at8wu2/index',
       },
       {
         title: '我的掘金',
         description: '对外的掘金技术交流',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/juejin-banner.jpg?e=1698849036&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:iWv9bVQqFapQAHfaPoeVmcphc9w=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/juejin-banner.jpg',
         href: '//juejin.cn/user/4309726841287277',
       },
       {
         title: '驾照题库-App',
         description: '一个可以刷驾照考题的 App',
-        banner: '//s3ecz0c2b.hn-bkt.clouddn.com/imgs/jiazhao-test.jpg?e=1698849397&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:uHqz5DZ5p5GIQiPCvrUDjzgYa0Q=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/jiazhao-test.jpg',
         href: '//jiazhao-test.bklove-zz.cn'
       }
     ],
