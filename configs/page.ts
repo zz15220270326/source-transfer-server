@@ -35,34 +35,40 @@ const pageConfig = {
       {
         title: '资源列表页面',
         description: '一个可以统一管理资源列表的页面（查询资源列表，查询资源详情，删除资源）',
-        banner: '//source-manage-cdn.bklove-zz.cn/imgs/source-list-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:7MGtUDoNXBNLlmH_x62TEz5m7f8=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/source-list-banner.jpg',
         href: '/source-list'
       },
       {
         title: 'B站视频上传页面',
         description: '一个可以将B站视频(*.m4s)转化为 MP4 资源的页面（上传 & 转化）',
-        banner: '//source-manage-cdn.bklove-zz.cn/imgs/bilibili-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:XqSNO5WqDbVNh7cO9LHSbMIfdMg=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/bilibili-banner.jpg',
         href: '/transfer-video'
       },
       {
         title: '网易音乐上传页面',
         description: '一个可以将网易音乐(*.ncm)转化为 MP3 资源的页面（上传 & 转化）',
-        banner: '//source-manage-cdn.bklove-zz.cn/imgs/netease-banner.jpg?e=1699420865&token=WO8DULO9FIsHnPpG2_qXrwSqua2RSfUKL_3li9UE:_dl0Hs-7GHOvijG2YeN74F95mIM=',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/netease-banner.jpg',
         href: '/transfer-audio'
       }
     ],
     relativeContentList: [
       {
-        title: '我的语雀博客',
+        title: '我的博客主页',
         description: '一些关于张三的个人介绍',
-        banner: '//source-manage-cdn.bklove-zz.cn/imgs/blog-banner.jpg',
-        href: '//www.yuque.com/jackcheung-pshcv/at8wu2/index',
+        banner: '//blog-source.bklove-zz.cn/logo/blog.png',
+        href: '//tech-blog.bklove-zz.cn/'
       },
       {
         title: '我的掘金',
         description: '对外的掘金技术交流',
         banner: '//source-manage-cdn.bklove-zz.cn/imgs/juejin-banner.jpg',
         href: '//juejin.cn/user/4309726841287277',
+      },
+      {
+        title: '我的语雀笔记',
+        description: '张三的语雀博客',
+        banner: '//source-manage-cdn.bklove-zz.cn/imgs/yuque-logo.png',
+        href: '//www.yuque.com/jackcheung-pshcv/at8wu2/index',
       },
       {
         title: '驾照题库-App',
