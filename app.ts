@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import bodyParser from 'body-parser';
+import 'dotenv/config';
 
 import * as middlewares from './middlewares';
 
