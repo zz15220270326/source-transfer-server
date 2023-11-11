@@ -5,6 +5,7 @@ export * from './modules/date';
 export * from './modules/audioTransfer';
 export * from './modules/logs';
 export * from './modules/app';
+export * from './modules/qiniu';
 
 /**
  * 根据列表获取分页数据

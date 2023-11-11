@@ -11,7 +11,8 @@ import {
   encryptFileName,
   getPaginationListData,
   filterSourceList,
-  createAudioId
+  createAudioId,
+  qiniuUploadFile
 } from '../libs/utils';
 
 /**
@@ -34,6 +35,15 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
 
     outputMp3ByNCM(path, outputMp3Path, outputMp3BannerPath);
 
+    // 上传音频到七牛云并获取链接
+    const { url: playUrl } = await qiniuUploadFile(outputMp3Path, {
+      type: 'audio',
+    });
+    // 上传视频到七牛云并获取链接
+    const { url: bannerUrl } = await qiniuUploadFile(outputMp3BannerPath, {
+      type: 'imgs'
+    });
+
     const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
     const fileInfo = {
       id: createAudioId(originalname),
@@ -41,8 +51,8 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
       filename,
       size,
       type: 'audio',
-      playUrl: paths.audioBaseUrl + filename + '.mp3',
-      banner: paths.audioBaseUrl + 'img/' + filename + '.png',
+      playUrl: playUrl.replace(/^(http|https)\:/, ''),
+      banner: bannerUrl.replace(/^(http|https)\:/, ''),
       createTime: Date.now(),
       updateTime: -1
     };
@@ -65,6 +75,9 @@ export async function transferNcmAudio(file: Express.Multer.File, multiple: bool
 
     initOriginDir();
     initTargetDir();
+    
+    unlinkSync(outputMp3Path);
+    unlinkSync(outputMp3BannerPath);
 
     return {
       code: 0,
@@ -93,6 +106,15 @@ export async function transferNcmAudioList(files: Express.Multer.File[]) {
 
     outputMp3ByNCM(path, outputMp3Path, outputMp3BannerPath);
 
+    // 上传音频到七牛云并获取链接
+    const { url: playUrl } = await qiniuUploadFile(outputMp3Path, {
+      type: 'audio',
+    });
+    // 上传视频到七牛云并获取链接
+    const { url: bannerUrl } = await qiniuUploadFile(outputMp3BannerPath, {
+      type: 'imgs'
+    });
+
     const prevFileList = readJsonFileSync<Record<string, any>[]>(paths.audioJsonPath);
     const fileInfo = {
       id: createAudioId(originalname),
@@ -100,8 +122,8 @@ export async function transferNcmAudioList(files: Express.Multer.File[]) {
       filename,
       size,
       type: 'audio',
-      playUrl: paths.audioBaseUrl + filename + '.mp3',
-      banner: paths.audioBaseUrl + 'img/' + filename + '.png',
+      playUrl: playUrl.replace(/^(http|https)\:/, ''),
+      banner: bannerUrl.replace(/^(http|https)\:/, ''),
       createTime: Date.now(),
       updateTime: -1
     };
@@ -127,6 +149,9 @@ export async function transferNcmAudioList(files: Express.Multer.File[]) {
       playUrl: fileInfo.playUrl,
       banner: fileInfo.banner,
     });
+
+    unlinkSync(outputMp3Path);
+    unlinkSync(outputMp3BannerPath);
   }
 
   setTimeout(() => {
